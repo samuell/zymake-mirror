@@ -144,7 +144,9 @@ A rule need only specify the information about a file that is relevant
 for that rule. Other keys will be inferred and added as necessary. For
 example, the rule for an evaluation script might specify
 
+	```bash
     eval $(metric) $().predictions > $().eval
+	```
 
 The `.eval` file must have the `metric` key, but it may
 have many other keys as well, which will be passed along to the
