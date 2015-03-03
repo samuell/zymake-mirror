@@ -6,7 +6,7 @@
 # A copy of the original webpage follows below, for documentation purposes
 ----
 
-`zymake`{.code} is a high-level language for running complex sets of
+`zymake` is a high-level language for running complex sets of
 experiments. The user writes a zymakefile, mostly consisting of
 parameterized shell commands, and zymake determines the dependency
 structure and executes the commands in the appropriate order.
@@ -28,7 +28,7 @@ Links
 -----
 
 -   [A slideshow (PDF) introducing
-    `zymake`{.code}](/~ebreck/data/zymake/talk.pdf)
+    `zymake`](/~ebreck/data/zymake/talk.pdf)
 -   [Another slideshow (based on the paper
     below)](/~ebreck/data/zymake/AclSofteng.pdf)
 -   [Download a Windows version of
@@ -41,7 +41,7 @@ Links
     code](/~ebreck/data/zymake/zymake-0.3.0-src.zip). Requires an
     installation of [Objective Caml](http://caml.inria.fr) to compile.
 -   [Read a paper](http://www.aclweb.org/anthology/W/W08/W08-0503.pdf)
-    -- `2008`{.code} Eric Breck. **zymake: a computational workflow
+    -- `2008` Eric Breck. **zymake: a computational workflow
     system for machine learning and natural language processing.** In
     *Proceedings of the Workshop on 2008 ACL workshop on Software
     Engineering, Testing, and Quality Assurance for Natural Language
@@ -49,15 +49,15 @@ Links
 -   A complete real-world [zymakefile](/~ebreck/data/zymake/ijcai07-run)
     used for the experiments reported in (Breck, Choi & Cardie, '07).
 -   [An announcement-only mailing list for users interested in
-    `zymake`{.code}.](http://tech.groups.yahoo.com/group/zymake-announce/)
+    `zymake`.](http://tech.groups.yahoo.com/group/zymake-announce/)
 
 Try it! - download zymake for your platform and the zymakefile above,
 and run
 
-`zymake -d ijcai07-run`{.code}
+`zymake -d ijcai07-run`
 
 to see what it would execute (nothing will actually be run, that's what
-`-d`{.code} means)
+`-d` means)
 
 Some introductory examples
 --------------------------
@@ -80,10 +80,10 @@ Some introductory examples
 
 -   **Cross-validation**
 
-    Suppose we have two commands. `run`{.code} takes an argument (the
+    Suppose we have two commands. `run` takes an argument (the
     cross-validation fold) and produces an output (the result of running
-    on that fold). `average-folds`{.code} takes a list of
-    `run`{.code}-outputs and averages them, producing a LaTeX table. We
+    on that fold). `average-folds` takes a list of
+    `run`-outputs and averages them, producing a LaTeX table. We
     can run this for 10 folds like this.
 
         run $(fold) > $().eval
@@ -93,12 +93,12 @@ Some introductory examples
 Usage
 -----
 
-A `zymake`{.code} file consists of a series of *definitions* and
+A `zymake` file consists of a series of *definitions* and
 *rules*. A definition defines an immutable global variable. A rule
 specifies a shell command to run, which takes certain kinds of files as
 input and certain files as output. Rules with no outputs are called
 *queries*, and the goal is to be able to execute all of the queries.
-What `zymake`{.code} does is to determine what commands are necessary to
+What `zymake` does is to determine what commands are necessary to
 be able to execute the queries, and in what order to execute them.
 
 For those who care, this involves constructing a directed acyclic graph
@@ -115,11 +115,11 @@ multiple rules could be executed next, you execute them all in parallel.
 
 There are, at the moment, two methods of parallel execution provided.
 First, the user provide a list of compute nodes in a special global
-variable called `machines`{.code}, and the system works out which nodes
-are least loaded, and runs the processes on those using `ssh`{.code}.
-Second, the user can provide a script `start`{.code} which will run a
+variable called `machines`, and the system works out which nodes
+are least loaded, and runs the processes on those using `ssh`.
+Second, the user can provide a script `start` which will run a
 given command on another machine (presumably through some sort of
-job-submission). `zymake`{.code} requires that this script wait until
+job-submission). `zymake` requires that this script wait until
 the job completes beore returning.
 
 I'm open to other sorts of interfaces here, e.g. with the machine
@@ -128,13 +128,13 @@ learning cluster's queueing mechanisms, I just don't know what they are.
 Files (key-value sets)
 ----------------------
 
-One of the things that differentiates `zymake`{.code} from standard
-`make`{.code} is how it understands files. Essentially, `make`{.code}
-treats each filename as a string. For `zymake`{.code}, a file is a set
+One of the things that differentiates `zymake` from standard
+`make` is how it understands files. Essentially, `make`
+treats each filename as a string. For `zymake`, a file is a set
 of key-value pairs. For example, a file might be defined by
-`model=svm fold=2 C=0.5`{.code}. Each file also has a distinguished key,
-the file suffix (such as `.svm`{.code}, `.eval`{.code}, or
-`.output`{.code}). Each file does not have to define a value for each
+`model=svm fold=2 C=0.5`. Each file also has a distinguished key,
+the file suffix (such as `.svm`, `.eval`, or
+`.output`). Each file does not have to define a value for each
 key.
 
 Matching
@@ -146,9 +146,9 @@ example, the rule for an evaluation script might specify
 
     eval $(metric) $().predictions > $().eval
 
-The `.eval`{.code} file must have the `metric`{.code} key, but it may
+The `.eval` file must have the `metric` key, but it may
 have many other keys as well, which will be passed along to the
-`.predictions`{.code} file if they are needed.
+`.predictions` file if they are needed.
 
 Starting with the queries, the matcher tries to figure out how to build
 each file needed. It matches the files it needs against all the rules,
@@ -159,7 +159,7 @@ zero or more than one rule is an error.
 Syntax
 ------
 
-As much as possible, the goal of `zymake`{.code}'s syntax is to avoid
+As much as possible, the goal of `zymake`'s syntax is to avoid
 having unnecessary escaping. Therefore, the rules that you write in the
 zymakefile correspond to the strings that are passed to the shell for
 execution, with two exceptions: any sequence of whitespace (including
@@ -169,12 +169,12 @@ anything beginning with the characters \$( and ending with a matching )
 lines.
 
 The syntax for global variable definitions is like that of rules, except
-that a definition begins with `identifier =`{.code}. Definitions can
+that a definition begins with `identifier =`. Definitions can
 also appear on adjacent lines without an intervening blank line.
 
 ### Comments
 
-Any line beginning with `#`{.code} is a comment. Any comments
+Any line beginning with `#` is a comment. Any comments
 immediately preceding a rule (with no intervening blank lines) are
 associated with the rule. During execution, the comment can optionally
 be displayed when the rule is executed, providing the user with a
@@ -206,22 +206,22 @@ interpolated into the command.
 
 Syntax:
 
-File-interpolation ::= `$(`{.code} `key1`{.code} `=`{.code}
-`value1`{.code} `key2`{.code} `=`{.code} `value2`{.code} ... `)`{.code}
+File-interpolation ::= `$(` `key1` `=`
+`value1` `key2` `=` `value2` ... `)`
 .suffix
 
-Expression-interpolation ::= `$(`{.code} `value`{.code} `)`{.code}
+Expression-interpolation ::= `$(` `value` `)`
 
-Expression-interpolation ::= `$(`{.code} `value0`{.code} `value1`{.code}
-`value2`{.code} ... `)`{.code}
+Expression-interpolation ::= `$(` `value0` `value1`
+`value2` ... `)`
 
 The latter syntax is shorthand for
 
-`$( ( value0 value1 value2 .... ) )`{.code}, i.e. it saves you a level
+`$( ( value0 value1 value2 .... ) )`, i.e. it saves you a level
 of parentheses.
 
-Value ::= integer-literal | string-literal | identifier | `(`{.code}
-`value0`{.code} `value1`{.code} `value2`{.code} .... `)`{.code}
+Value ::= integer-literal | string-literal | identifier | `(`
+`value0` `value1` `value2` .... `)`
 
 Identifiers evaluate to the value of the corresponding key, or the value
 of the corresponding global variable if no key exists.
@@ -230,8 +230,8 @@ Lists evaluate by evaluating the first value. If this is a special form,
 it is directly applied to the later values; otherwise, the other values
 are evaluated, and the function is applied to them.
 
-Interpolations are always introduced by the characters `$(`{.code}. To
-interpolate the literal characters `$(`{.code}, write `$(()`{.code}.
+Interpolations are always introduced by the characters `$(`. To
+interpolate the literal characters `$(`, write `$(()`.
 
 File interpolations are currently not allowed in global variable
 definitions. It's not clear what it would mean; if you can come up with
@@ -241,11 +241,11 @@ about including it.
 ### Input and output files
 
 A file interpolation is an input unless otherwise specified. If the
-interpolation begins with the `>`{.code} character, it is an output, or
-if the most recent character before the interpolation was a `>`{.code}
+interpolation begins with the `>` character, it is an output, or
+if the most recent character before the interpolation was a `>`
 (to cover the common case of creating a file by output redirection).
 This latter case can be overridden by beginning the interpolation with
-`<`{.code}.
+`<`.
 
 ### "splats"
 
@@ -264,25 +264,25 @@ which case the cross-product of all values will be created (i.e.
 splatting a 3-value list and a 4-value list will result in 12 files).
 
 You can also splat expression interpolations by writing
-`$( * value)`{.code}. This allows you to join existing lists together.
+`$( * value)`. This allows you to join existing lists together.
 
 ### Functions
 
 A small set of functions and special forms is provided for use in
 interpolations.
 
--   `quote`{.code} Like Lisp or Scheme, this prevents evaluation of the
+-   `quote` Like Lisp or Scheme, this prevents evaluation of the
     following expression. This can also be written by preceding the
     expression with a single quote '
--   `list`{.code} creates a list composed of the following expressions.
--   `flatten`{.code} creates a list from a list of lists
--   `range`{.code} creates a list from a start value to a finish value,
+-   `list` creates a list composed of the following expressions.
+-   `flatten` creates a list from a list of lists
+-   `range` creates a list from a start value to a finish value,
     either of integers or of characters
--   `split`{.code} takes a string and returns a list of strings,
+-   `split` takes a string and returns a list of strings,
     splitting the initial string by whitespace
--   `concat`{.code} takes a list of strings or integers and returns the
+-   `concat` takes a list of strings or integers and returns the
     result of joining them all together (with no intervening spaces)
--   `shell`{.code} takes a string argument, and returns the standard
+-   `shell` takes a string argument, and returns the standard
     output of executing that command. This is just like the shell
     function in GNU make or backticks in shells or Perl.
 -   ... there are some others
@@ -305,17 +305,17 @@ will often just be the value (with some modification to make it a
 filesystem-friendly string). If the value is a variable interpolation,
 the label will often be the name of the variable. Additional characters
 may be added to the end of the label to make this mapping unique. This
-mapping is written out to the file `o/o.zymakefilename._dict`{.code}.
+mapping is written out to the file `o/o.zymakefilename._dict`.
 
 Next, zymake creates a name for a file by concatenating the labels for
 all its key, value pairs (in a fixed order), followed by the suffix,
 separated by periods. Finally, zymake prefixes a string unique to the
-zymakefile, typically `o/o.zymakefilename.`{.code}
+zymakefile, typically `o/o.zymakefilename.`
 
 Key set inference
 -----------------
 
-`FIXME: replace this with declarative description`{.code}
+`FIXME: replace this with declarative description`
 
 The goal is that a file should contain all and only the keys it needs.
 The algorithm to determine which keys a file has is this:
@@ -332,11 +332,11 @@ The algorithm to determine which keys a file has is this:
 Query mode
 ----------
 
-`zymake.byt -q QUERY zymakefile`{.code} prints to standard output the
+`zymake.byt -q QUERY zymakefile` prints to standard output the
 result of parsing QUERY as if it were a command in a zymakefile. You can
 use this, among other things, to print out the filename that zymake
 would create for a given file interpolation: e.g.
-`zymake.byt -q '$(a=1 b="foo").bar' zymakefile`{.code} would print out
+`zymake.byt -q '$(a=1 b="foo").bar' zymakefile` would print out
 something like "o/zymakefile/o.1.foo.bar".
 
 Future features
@@ -360,6 +360,6 @@ it's taking forever, delete some of the -vs.
 Contributors
 ------------
 
-`zymake`{.code} was written by [Eric
+`zymake` was written by [Eric
 Breck](http://www-personal.umich.edu/~ebreck/).\
 
