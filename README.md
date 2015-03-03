@@ -66,12 +66,16 @@ Some introductory examples
 
     The make rule
 
-        %.exe: %.c
-                cc -o $@ $^
+    ```make
+	%.exe: %.c
+			cc -o $@ $^
+	```
 
     would be written in zymake as
 
-        cc -o $(>).exe $().c
+	```bash
+	cc -o $(>).exe $().c
+	```
 
     Note that rather than separating the specification of dependencies
     from the shell command, zymake integrates the two. In this case, the
