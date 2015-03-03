@@ -21,7 +21,7 @@ Highlights
 -   a file is determined by a set of key-value pairs, such as
     "method=svm" or "number-of-hidden-units=10"
 -   simple interpolation syntax: everything apart from whitespace and
-    \$(...) is passed untouched to the shell for execution.
+    `$(...)` is passed untouched to the shell for execution.
 -   parallel execution
 
 Links
@@ -81,7 +81,7 @@ Some introductory examples
 
     Note that rather than separating the specification of dependencies
     from the shell command, zymake integrates the two. In this case, the
-    output file (the .exe) needs to be specified with the \> character.
+    output file (the .exe) needs to be specified with the `>` character.
     The semantics of this rule are almost identical to that of make.
 
 -   **Cross-validation**
@@ -172,7 +172,7 @@ having unnecessary escaping. Therefore, the rules that you write in the
 zymakefile correspond to the strings that are passed to the shell for
 execution, with two exceptions: any sequence of whitespace (including
 newlines) are collapsed into a single space, and interpolations -
-anything beginning with the characters \$( and ending with a matching )
+anything beginning with the characters `$(` and ending with a matching `)`
 - are replaced by their value. Different rules are separated by blank
 lines.
 
@@ -373,5 +373,5 @@ Contributors
 ------------
 
 `zymake` was written by [Eric
-Breck](http://www-personal.umich.edu/~ebreck/).\
+Breck](http://www-personal.umich.edu/~ebreck/).
 
