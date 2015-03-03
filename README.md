@@ -54,7 +54,9 @@ Links
 Try it! - download zymake for your platform and the zymakefile above,
 and run
 
-`zymake -d ijcai07-run`
+```bash
+zymake -d ijcai07-run
+```
 
 to see what it would execute (nothing will actually be run, that's what
 `-d` means)
