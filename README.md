@@ -208,22 +208,22 @@ interpolated into the command.
 
 Syntax:
 
-File-interpolation ::= `$(` `key1` `=`
-`value1` `key2` `=` `value2` ... `)`
-.suffix
+```bnf
+File-interpolation ::= $( key1 = value1 key2 = value2 ... ).suffix
 
-Expression-interpolation ::= `$(` `value` `)`
+Expression-interpolation ::= $( value )
 
-Expression-interpolation ::= `$(` `value0` `value1`
-`value2` ... `)`
+Expression-interpolation ::= $( value0 value1 value2 ... )
+```
 
 The latter syntax is shorthand for
 
 `$( ( value0 value1 value2 .... ) )`, i.e. it saves you a level
 of parentheses.
 
-Value ::= integer-literal | string-literal | identifier | `(`
-`value0` `value1` `value2` .... `)`
+```bnf
+Value ::= integer-literal | string-literal | identifier | ( value0 value1 value2 .... )
+```
 
 Identifiers evaluate to the value of the corresponding key, or the value
 of the corresponding global variable if no key exists.
@@ -256,7 +256,9 @@ have it represent a list of objects. For example, I might want to write
 that a final table depends on evaluation outputs from 10
 cross-validation folds. I could write this using a 'splat':
 
-     make-table $(fold=*(1 2 3 4 5 6 7 8 9 10)).eval > $().table 
+```bash
+make-table $(fold=*(1 2 3 4 5 6 7 8 9 10)).eval > $().table 
+```
 
 The asterisk indicates that the file interpolation should be replicated
 once for each value in the list following the asterisk.
@@ -354,7 +356,9 @@ Reporting bugs
 Send me an e-mail if something breaks. The more info the better. In
 particular, you can run:
 
-    zymake -vvv zymakefile
+```bash
+zymake -vvv zymakefile
+```
 
 and send me everything that gets spewed out. If it's so much spew that
 it's taking forever, delete some of the -vs.
